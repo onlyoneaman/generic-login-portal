@@ -4,6 +4,10 @@ import GetUserDetails from "../Common/ApiCall/GetUserDetails";
 import SendNotification from "../Common/Utils/SendNotification";
 import NotificationTypeEnum from "../Common/Models/NotificationTypeEnum";
 import {PrivateRoute} from "../Components/PrivateRoute";
+import Dashboard from "../Dashboard";
+import {GeneralRoute} from "../Components/GeneralRoute";
+import {AuthRoute} from "../Components/AuthRoute";
+import WelcomePage from "../WelcomePage";
 
 const Home = () => {
   const [user, setUser] = useState(null)
@@ -42,9 +46,19 @@ const Home = () => {
         exact
         user={user}
         isAuthed={isAuthed}
+        Component={Dashboard}
       />
 
+      <GeneralRoute
+        Component={WelcomePage}
+      />
 
+      <AuthRoute
+        path='/sign-in'
+        exact
+        isAuthed={isAuthed}
+        setUser={setUserDetails}
+      />
 
     </Switch>
   )
