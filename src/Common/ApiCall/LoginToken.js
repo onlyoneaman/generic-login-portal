@@ -22,7 +22,7 @@ const LoginToken = async (email, password) => {
 
 function dummyPlans() {
   return {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk3NzM2NzExLCJleHAiOm51bGx9.ozZkk3wZjzCEwBlq_dSbonnLT2e4Hs7F9Kve4RKbFps"
+    "token": "Blq_dSbonnLT2e4Hs7F9Kve4RKbFps"
   }
 }
 
