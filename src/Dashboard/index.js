@@ -7,11 +7,9 @@ import {
   UploadOutlined, CloudDownloadOutlined
 } from '@ant-design/icons';
 import HomePage from "./HomePage";
-import Download from "./Download"
 import Upsell from "./Upsell";
 import Training from "./Training";
 import isMobile from "is-mobile";
-import PremiumTraining from "./PremiumTraining";
 import FAQ from "./FAQ";
 
 const {Header, Sider, Content} = Layout
@@ -43,9 +41,7 @@ const Dashboard = (user) => {
   function component() {
     switch (key) {
       case 1: return <HomePage user={user} setKey={setKey} />
-      case 2: return <Download />
       case 3: return <Training />
-      case 4: return <PremiumTraining permissions={IsPremiumTraining} />
       case 5: return <Upsell />
       case 7: return <FAQ />
       default: return <HomePage user={user} setKey={setKey} />

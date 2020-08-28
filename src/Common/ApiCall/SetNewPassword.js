@@ -1,13 +1,13 @@
 import { PostRequest} from "./Requests";
 import ApiResponse from "../Models/ApiResponse";
 import ApiError from "../Models/ApiError";
-import {ApiUrl, GenerateUrl} from "./ApiUrl";
+import {ConstructErrorMessage, GenerateUrl} from "./ApiUrl";
 
-const LoginToken = async (email, password) => {
+const SetNewPassword = async (token, password) => {
   let apiResponse;
   if (process.env.NODE_ENV !== "development") {
-    apiResponse = await PostRequest(GenerateUrl("/api/v1/login"), {
-      email,
+    apiResponse = await PostRequest(GenerateUrl("/api/v1/forgot_password/send_mail"), {
+      token,
       password
     })
   } else {
@@ -16,19 +16,18 @@ const LoginToken = async (email, password) => {
   if (apiResponse.isValid()) {
     return apiResponse.body.data;
   } else {
-    let message = `Something went wrong. Error: ${apiResponse.error}`;
-    return new ApiError(message);
+    return ConstructErrorMessage(apiResponse.error)
   }
 };
 
 function dummyPlans() {
   return {
     data: {
-      "token": "Blq_dSbonnLT2e4Hs7F9Kve4RKbFps"
+      "message": "Password Changed"
     },
     success: true,
     errors: []
   }
 }
 
-export default LoginToken
+export default SetNewPassword

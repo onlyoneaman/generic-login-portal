@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './Components/all.sass'
 import ErrorBoundary from "./Common/Components/ErrorBoundary";
 import Home from "./Home";
 

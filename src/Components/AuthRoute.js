@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Route, Redirect} from "react-router-dom";
-import GetUserDetails from "../Common/ApiCall/GetUserDetails";
 
-export const AuthRoute = ({Component, isAuthed, user, setUser, ...rest}) => {
+export const AuthRoute = ({children, isAuthed, user, setUser, ...rest}) => {
   console.log(user, rest)
 
   return(
@@ -12,7 +11,7 @@ export const AuthRoute = ({Component, isAuthed, user, setUser, ...rest}) => {
             pathname: '/'
           }} />
       ) : (
-          <Component />
+          children
       )}
     />
   )

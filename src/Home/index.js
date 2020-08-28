@@ -8,6 +8,9 @@ import Dashboard from "../Dashboard";
 import {GeneralRoute} from "../Components/GeneralRoute";
 import {AuthRoute} from "../Components/AuthRoute";
 import WelcomePage from "../WelcomePage";
+import Auth from "../Auth";
+import ForgotPassword from "./ForgotPassword";
+import NotFound from "./NotFound";
 
 const Home = () => {
   const [user, setUser] = useState(null)
@@ -49,15 +52,29 @@ const Home = () => {
         Component={Dashboard}
       />
 
-      <GeneralRoute
-        Component={WelcomePage}
-      />
-
       <AuthRoute
         path='/sign-in'
         exact
         isAuthed={isAuthed}
         setUser={setUserDetails}
+      >
+        <Auth setUser={setUserDetails} />
+      </AuthRoute>
+
+      <AuthRoute
+        path="/validate/:id"
+        exact
+      >
+        <ForgotPassword />
+      </AuthRoute>
+
+      <GeneralRoute
+        path="/general"
+        Component={WelcomePage}
+      />
+
+      <GeneralRoute
+        Component={NotFound}
       />
 
     </Switch>

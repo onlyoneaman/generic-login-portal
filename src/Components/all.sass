@@ -1,1 +1,57 @@
 @import "~antd/dist/antd.css"
+
+$dark-background: #001529
+$background: #F0F2F5
+
+.logo-img
+  max-width: 160px
+.content-wrapper
+  margin: 24px 16px
+  padding: 24px
+  min-height: 280px
+.content-wrapper-margin-less
+  margin: 0
+
+.menu-float-right
+  float: right
+.is-fullheight
+  min-height: 100vh
+.theme-background
+  background-color: $background
+
+/// IFrame
+
+.iframe-container
+  position: relative
+  padding-bottom: 56.25%
+  margin: 1rem
+  height: 0
+.iframe-container iframe
+  position: absolute
+  top : 0
+  left: 0
+  width: 100%
+  height: 100%
+  border: 1px black solid
+
+.dark-button
+  background-color: $dark-background
+
+.is-marginless
+  margin: 0
+.align-center
+  text-align: center
+
+/// FAQ
+
+[data-theme='compact'] .site-collapse-custom-collapse .site-collapse-custom-panel,
+.site-collapse-custom-collapse .site-collapse-custom-panel
+  background: $dark-background
+  border-radius: 2px
+  margin-bottom: 24px
+  border: 0px
+  overflow: hidden
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header
+  color: white
+  font-weight: normal

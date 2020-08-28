@@ -1,11 +1,11 @@
 import { PostRequest} from "./Requests";
 import ApiResponse from "../Models/ApiResponse";
-import ApiError from "../Models/ApiError";
+import {ConstructErrorMessage, GenerateUrl} from "./ApiUrl";
 
 const RegisterUser = async (email, password) => {
   let apiResponse;
   if (process.env.NODE_ENV !== "development") {
-    apiResponse = await PostRequest("https://localhost:3000/api/v1/register", {
+    apiResponse = await PostRequest(GenerateUrl("/api/v1/register"), {
       password,
       email
     })
@@ -15,14 +15,17 @@ const RegisterUser = async (email, password) => {
   if (apiResponse.isValid()) {
     return apiResponse.body.data;
   } else {
-    let message = `Something went wrong. Please contact support@profilebud.com. Error: ${apiResponse.error}`;
-    return new ApiError(message);
+    return ConstructErrorMessage(apiResponse.error)
   }
 };
 
 function dummyPlans() {
   return {
-    "message": "User Registered"
+    data: {
+      "message": "User Registered"
+    },
+    success: true,
+    errors: []
   }
 }
 

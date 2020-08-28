@@ -3,6 +3,7 @@ import {Button, Form, Input} from "antd";
 import SendNotification from "../Common/Utils/SendNotification";
 import NotificationTypeEnum from "../Common/Models/NotificationTypeEnum";
 import RegisterUser from "../Common/ApiCall/RegisterUser";
+import Sleep from "../Common/Utils/Sleep";
 
 const layout = {
   wrapperCol: {
@@ -15,16 +16,22 @@ const tailLayout = {
   },
 };
 
-const SignUp = () => {
+const SignUp = ({setTab}) => {
 
   const onFinish = values => {
     if(values.password !== values.confirm_password) {
       SendNotification(NotificationTypeEnum.Success, 'Passwords doesn\'t match')
       return
     }
-    RegisterUser(values.email, values.token, values.password)
+    RegisterUser(values.email, values.password)
       .then(r => {
-        SendNotification(NotificationTypeEnum.Success ,r.message)
+        if(r.success) {
+          SendNotification(NotificationTypeEnum.Success ,r.data.message)
+          Sleep(3000)
+            .then(()=>setTab(1))
+        } else {
+          SendNotification(NotificationTypeEnum.Failure, r.errors[0].message)
+        }
       })
     console.log('Success:', values);
   };
@@ -100,7 +107,7 @@ const SignUp = () => {
         />
       </Form.Item>
 
-      <Form.Item
+{/*      <Form.Item
         name="token"
         rules={[
           {
@@ -110,15 +117,19 @@ const SignUp = () => {
         ]}
       >
         <Input
-          placeholder="Enter ProfileMate Token"
+          placeholder="Enter Token"
           type="text"
         />
-      </Form.Item>
+      </Form.Item>*/}
 
       <Form.Item {...tailLayout}>
         <div className="align-center">
-          <Button size="large" htmlType="submit">
+          <Button size="large" type="primary" htmlType="submit">
             Sign Up
+          </Button>
+          &nbsp;&nbsp;&nbsp;
+          <Button size="large" onClick={()=>setTab(1)}>
+            SIGN IN
           </Button>
         </div>
       </Form.Item>
