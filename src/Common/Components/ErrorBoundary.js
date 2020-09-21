@@ -23,7 +23,7 @@ class ErrorBoundary extends React.Component{
       return(
         <div className="vertically-center">
           <h1>Something went wrong - Reason -> "{this.state.error}"</h1>
-          <h2>Please mail this to support@grambuddy.com with above error reason.</h2>
+          <h2>Please mail this to support with above error reason.</h2>
         </div>
       );
     }

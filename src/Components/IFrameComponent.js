@@ -1,7 +1,7 @@
 import React from "react";
 
 const IFrameComponent = ({url}) => {
-  if(!url) url = "https://www.youtube.com/embed/tFNWHLEIiJ0";
+  if(!url) url = "https://www.youtube.com/embed/2uwThj8-y3I";
   return(
     <div className="iframe-container">
       <iframe

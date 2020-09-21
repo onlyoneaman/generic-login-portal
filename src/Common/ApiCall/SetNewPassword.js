@@ -1,7 +1,6 @@
 import { PostRequest} from "./Requests";
-import ApiResponse from "../Models/ApiResponse";
-import ApiError from "../Models/ApiError";
-import {ConstructErrorMessage, GenerateUrl} from "./ApiUrl";
+import ApiResponse from "../Models/ApiResponse"
+import {GenerateUrl} from "./ApiUrl";
 
 const SetNewPassword = async (token, password) => {
   let apiResponse;
@@ -13,10 +12,10 @@ const SetNewPassword = async (token, password) => {
   } else {
     apiResponse = new ApiResponse({data: dummyPlans()}, 200, null)
   }
-  if (apiResponse.isValid()) {
-    return apiResponse.body.data;
+  if (apiResponse.body) {
+    return apiResponse.body;
   } else {
-    return ConstructErrorMessage(apiResponse.error)
+    return apiResponse.error
   }
 };
 

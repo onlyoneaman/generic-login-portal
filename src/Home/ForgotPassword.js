@@ -39,7 +39,11 @@ const ForgotPassword = () => {
     }
     SetNewPassword(token, values.password)
       .then(r => {
-        SendNotification(NotificationTypeEnum.Success ,r.message)
+        if(r.success) {
+          SendNotification(NotificationTypeEnum.Success ,r.data.message)
+        } else {
+          SendNotification(NotificationTypeEnum.Failure, r.errors[0].message)
+        }
       })
   };
 

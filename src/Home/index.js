@@ -11,6 +11,7 @@ import WelcomePage from "../WelcomePage";
 import Auth from "../Auth";
 import ForgotPassword from "./ForgotPassword";
 import NotFound from "./NotFound";
+import ReactGA from 'react-ga'
 
 const Home = () => {
   const [user, setUser] = useState(null)
@@ -27,11 +28,11 @@ const Home = () => {
     if(token) {
       GetUserDetails(token)
         .then(r => {
-          if(r) {
-            setUser(r)
+          if(r.success) {
+            setUser(r.data)
           }
           else {
-            SendNotification(NotificationTypeEnum.Success, 'Bad Credentials')
+            SendNotification(NotificationTypeEnum.Success, 'Token Expired. Login Again')
           }
         })
     }
@@ -39,7 +40,13 @@ const Home = () => {
 
   useEffect(()=>setUserDetails(), [])
 
-  useEffect(()=>handleAuthed())
+  useEffect(()=> {
+    handleAuthed()
+    ReactGA.initialize('UA-178422717-1', {
+      debug: true,
+      titleCase: false
+    });
+  })
 
   return(
     <Switch>
@@ -58,7 +65,15 @@ const Home = () => {
         isAuthed={isAuthed}
         setUser={setUserDetails}
       >
-        <Auth setUser={setUserDetails} />
+        <Auth setUser={setUserDetails} signIn />
+      </AuthRoute>
+
+      <AuthRoute
+        path="/sign-up"
+        exact
+        isAuthed={isAuthed}
+      >
+        <Auth signUp />
       </AuthRoute>
 
       <AuthRoute

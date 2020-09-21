@@ -14,6 +14,9 @@ const WelcomePage = () => {
             <Title>
               Welcome Page
             </Title>
+            <Title level={3} >
+              This page can be viewed by anyone
+            </Title>
           </PlainContentWrapper>
         </Col>
       </Row>

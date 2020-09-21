@@ -1,6 +1,5 @@
 import { PostRequest} from "./Requests";
-import ApiResponse from "../Models/ApiResponse";
-import ApiError from "../Models/ApiError";
+import ApiResponse from "../Models/ApiResponse"
 import {GenerateUrl} from "./ApiUrl";
 
 const GetUserDetails = async (token) => {
@@ -8,13 +7,12 @@ const GetUserDetails = async (token) => {
   if (process.env.NODE_ENV !== "development") {
     apiResponse = await PostRequest(GenerateUrl("/api/v1/me"), {}, {Authorization: `Bearer ${token}`})
   } else {
-    apiResponse = new ApiResponse({data: dummyPlans()}, 200, null)
+    apiResponse = new ApiResponse(dummyPlans(), 200, null)
   }
-  if (apiResponse.isValid()) {
+  if (apiResponse.body) {
     return apiResponse.body;
   } else {
-    let message = `Something went wrong. Please contact support@profilebud.com. Error: ${apiResponse.error}`;
-    return new ApiError(message);
+    return apiResponse.error;
   }
 };
 
@@ -22,10 +20,7 @@ function dummyPlans() {
   return {
     data: {
       "id": 1,
-      "email": "admin@profilemate.com",
-      "permissions": [
-        "PREMIUM_TRAINING"
-      ]
+      "email": "admin@website.com",
     },
     success: true,
     errors: []

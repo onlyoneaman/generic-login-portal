@@ -1,7 +1,6 @@
 import { PostRequest} from "./Requests";
 import ApiResponse from "../Models/ApiResponse";
-import ApiError from "../Models/ApiError";
-import {ApiUrl, GenerateUrl} from "./ApiUrl";
+import {GenerateUrl} from "./ApiUrl";
 
 const LoginToken = async (email, password) => {
   let apiResponse;
@@ -11,13 +10,12 @@ const LoginToken = async (email, password) => {
       password
     })
   } else {
-    apiResponse = new ApiResponse({data: dummyPlans()}, 200, null)
+    apiResponse = new ApiResponse(dummyPlans(), 200, null)
   }
-  if (apiResponse.isValid()) {
-    return apiResponse.body.data;
+  if (apiResponse.body) {
+    return apiResponse.body;
   } else {
-    let message = `Something went wrong. Error: ${apiResponse.error}`;
-    return new ApiError(message);
+    return apiResponse.error
   }
 };
 

@@ -1,6 +1,6 @@
 import { PostRequest} from "./Requests";
 import ApiResponse from "../Models/ApiResponse";
-import {ConstructErrorMessage, GenerateUrl} from "./ApiUrl";
+import {GenerateUrl} from "./ApiUrl";
 
 const RegisterUser = async (email, password) => {
   let apiResponse;
@@ -10,12 +10,12 @@ const RegisterUser = async (email, password) => {
       email
     })
   } else {
-    apiResponse = new ApiResponse({data: dummyPlans()}, 200, null)
+    apiResponse = new ApiResponse(dummyPlans(), 200, null)
   }
-  if (apiResponse.isValid()) {
-    return apiResponse.body.data;
+  if (apiResponse.body) {
+    return apiResponse.body;
   } else {
-    return ConstructErrorMessage(apiResponse.error)
+    return apiResponse.error
   }
 };
 

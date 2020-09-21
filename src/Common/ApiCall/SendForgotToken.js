@@ -1,7 +1,6 @@
 import { PostRequest} from "./Requests";
-import ApiResponse from "../Models/ApiResponse";
-import ApiError from "../Models/ApiError";
-import {ConstructErrorMessage, GenerateUrl} from "./ApiUrl";
+import ApiResponse from "../Models/ApiResponse"
+import {GenerateUrl} from "./ApiUrl";
 
 const SendForgotToken = async (email) => {
   let apiResponse;
@@ -10,12 +9,12 @@ const SendForgotToken = async (email) => {
       email
     })
   } else {
-    apiResponse = new ApiResponse({data: dummyPlans()}, 200, null)
+    apiResponse = new ApiResponse(dummyPlans(), 200, null)
   }
-  if (apiResponse.isValid()) {
-    return apiResponse.body.data;
+  if (apiResponse.body) {
+    return apiResponse.body;
   } else {
-    return ConstructErrorMessage(apiResponse.error)
+    return apiResponse.error
   }
 };
 

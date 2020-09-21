@@ -1,22 +1,36 @@
 import React, {useState} from "react";
-import {Button, Form, Input} from "antd";
+import {Button, Form, Input, Typography, Divider} from "antd";
 import SendNotification from "../Common/Utils/SendNotification";
 import NotificationTypeEnum from "../Common/Models/NotificationTypeEnum";
 import RegisterUser from "../Common/ApiCall/RegisterUser";
 import Sleep from "../Common/Utils/Sleep";
+import {Link, Redirect} from "react-router-dom";
+
+const {Title} = Typography
 
 const layout = {
   wrapperCol: {
-    span: 24,
+    lg: {
+      span: 20,
+      offset: 2
+    }
   },
 };
 const tailLayout = {
   wrapperCol: {
-    span: 24,
+    ld: {
+      span: 20,
+      offset: 2
+    },
+    md: {
+      span: 24
+    }
   },
 };
 
-const SignUp = ({setTab}) => {
+
+const SignUp = () => {
+  const [success, setSuccess] = useState(false)
 
   const onFinish = values => {
     if(values.password !== values.confirm_password) {
@@ -28,17 +42,33 @@ const SignUp = ({setTab}) => {
         if(r.success) {
           SendNotification(NotificationTypeEnum.Success ,r.data.message)
           Sleep(3000)
-            .then(()=>setTab(1))
+            .then(()=>{
+              setSuccess(true)
+            })
         } else {
-          SendNotification(NotificationTypeEnum.Failure, r.errors[0].message)
+          let error ='Registration Failed'
+          if(r.errors[0].message) {
+            error = r.errors[0].message
+          }
+          SendNotification(NotificationTypeEnum.Failure, error)
         }
       })
-    console.log('Success:', values);
+    // console.log('Success:', values);
   };
 
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
+
+  if(success) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    )
+  }
 
   return(
     <Form
@@ -49,87 +79,91 @@ const SignUp = ({setTab}) => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
-      {/*      <Form.Item
-        name="Name"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your name!',
-          },
-        ]}
-      >
-        <Input
-          placeholder="Full name"
-          type="text"
-        />
-      </Form.Item>*/}
 
-      <Form.Item
-        name="Email"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your email!',
-          },
-        ]}
-      >
-        <Input
-          placeholder="Email"
-          type="email"
-        />
+      <Form.Item>
+        <Form.Item
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your email!',
+            },
+          ]}
+          noStyle
+        >
+          <Input
+            size="large"
+            bordered={false}
+            placeholder="Email"
+            type="email"
+          />
+        </Form.Item>
+        <Divider className="black-divider" />
       </Form.Item>
 
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-      >
-        <Input.Password
-          placeholder="Password"
-        />
+      <Form.Item>
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              min: 8
+            },
+          ]}
+          noStyle
+        >
+          <Input.Password
+            bordered={false}
+            placeholder="Password"
+            size="large"
+          />
+        </Form.Item>
+        <Divider className="black-divider" />
       </Form.Item>
 
-      <Form.Item
-        name="confirm_password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-      >
-        <Input.Password
-          placeholder="Confirm Password"
-        />
+      <Form.Item>
+        <Form.Item
+          name="confirm_password"
+          rules={[
+            {
+              required: true,
+              min: 8,
+            },
+          ]}
+          noStyle
+        >
+          <Input.Password
+            size="large"
+            bordered={false}
+            placeholder="Confirm Password"
+          />
+        </Form.Item>
+        <Divider className="black-divider" />
       </Form.Item>
 
-{/*      <Form.Item
-        name="token"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the token!',
-          },
-        ]}
-      >
-        <Input
-          placeholder="Enter Token"
-          type="text"
-        />
-      </Form.Item>*/}
+      <br />
 
       <Form.Item {...tailLayout}>
         <div className="align-center">
-          <Button size="large" type="primary" htmlType="submit">
+          <Button
+            size="large"
+            htmlType="submit"
+            type="primary"
+          >
             Sign Up
           </Button>
-          &nbsp;&nbsp;&nbsp;
-          <Button size="large" onClick={()=>setTab(1)}>
-            SIGN IN
+        </div>
+      </Form.Item>
+
+      <Form.Item {...tailLayout}>
+        <div className="align-center">
+          <Button
+            size="large"
+            htmlType="submit"
+          >
+            <Link to={'/'}>
+              Already Registered? Sign In
+            </Link>
           </Button>
         </div>
       </Form.Item>

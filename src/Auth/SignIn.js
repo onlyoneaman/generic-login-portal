@@ -1,21 +1,35 @@
 import React, {useState} from "react";
-import {Button, Form, Input, Modal} from "antd";
-import GetUserDetails from "../Common/ApiCall/GetUserDetails";
+import {Button, Divider, Form, Input, Modal, Typography} from "antd";
 import LoginToken from "../Common/ApiCall/LoginToken";
 import SendNotification from "../Common/Utils/SendNotification";
 import NotificationTypeEnum from "../Common/Models/NotificationTypeEnum";
 import SendForgotToken from "../Common/ApiCall/SendForgotToken";
+import {Link} from "react-router-dom";
 
 const layout = {
   wrapperCol: {
-    span: 24,
+    lg: {
+      span: 20,
+      offset: 2
+    },
+    md: {
+      span: 24
+    }
   },
 };
 const tailLayout = {
   wrapperCol: {
-    span: 24
+    lg: {
+      span: 20,
+      offset: 2
+    },
+    md: {
+      span: 24
+    }
   },
 };
+
+const {Title} = Typography
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm();
@@ -60,28 +74,23 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
             type="email"
           />
         </Form.Item>
-        {/*        <Form.Item name="description" label="Description">
-          <Input type="textarea" />
-        </Form.Item>
-        <Form.Item name="modifier" className="collection-create-form_last-form-item">
-          <Radio.Group>
-            <Radio value="public">Public</Radio>
-            <Radio value="private">Private</Radio>
-          </Radio.Group>
-        </Form.Item>*/}
       </Form>
     </Modal>
   );
 };
 
-const SignIn = ({setTab, setUser}) => {
+const SignIn = ({setUser}) => {
   const [visible, setVisible] = useState(false)
 
   const onCreate = values => {
     //console.log('Received values of form: ', values);
     SendForgotToken(values.username)
       .then(r => {
-        SendNotification('', r.message)
+        if(r.success) {
+          SendNotification(NotificationTypeEnum.Success, r.data.message)
+        } else {
+          SendNotification(NotificationTypeEnum.Failure, r.errors[0].message)
+        }
       })
     setVisible(false);
   };
@@ -89,7 +98,7 @@ const SignIn = ({setTab, setUser}) => {
   function onFinish(values) {
     LoginToken(values.username, values.password)
       .then(r => {
-        console.log(r)
+        //console.log(r)
         if(r.success) {
           localStorage.setItem('authToken', r.data.token)
           setUser()
@@ -101,7 +110,7 @@ const SignIn = ({setTab, setUser}) => {
   }
 
   const onFinishFailed = errorInfo => {
-    SendNotification(NotificationTypeEnum.Failure, errorInfo)
+    //console.log(errorInfo)
   };
 
   return(
@@ -114,43 +123,72 @@ const SignIn = ({setTab, setUser}) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your username!'
-            }
-          ]}
-        >
-          <Input
-            placeholder="Username"
-            type="text"
-          />
+        <Form.Item>
+          <Form.Item
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your username!'
+              }
+            ]}
+            noStyle
+          >
+            <Input
+              bordered={false}
+              placeholder="Username"
+              size="large"
+              type="text"
+            />
+          </Form.Item>
+          <Divider className="black-divider" />
         </Form.Item>
 
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your password!'
-            }
-          ]}
-        >
-          <Input.Password
-            placeholder="Password"
-          />
+        <Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password!',
+                min: 8
+              }
+            ]}
+          >
+            <Input.Password
+              placeholder="Password"
+              bordered={false}
+              size="large"
+            />
+          </Form.Item>
+          <Divider className="black-divider" />
         </Form.Item>
 
-        <Form.Item {...tailLayout} >
+        <Form.Item {...tailLayout}>
           <div className="align-center">
             <Button className="dark-button" size="large" type="primary" htmlType="submit">
               LOGIN
             </Button>
-            &nbsp;&nbsp;&nbsp;
-            <Button size="large" onClick={()=>setTab(0)}>
-              SIGN UP
+          </div>
+        </Form.Item>
+
+        <Form.Item {...tailLayout}>
+          <div className="align-center">
+            <Title level={4}>
+              Don't have an Account?
+            </Title>
+            <Button
+              block
+              size="large"
+              style={{
+                background: 'transparent linear-gradient(180deg, #001529 80%, #546270 100%) 0% 0% no-repeat padding-box',
+                padding: '2px 15px'
+              }}
+              type="primary"
+            >
+              <Link to={'/sign-up'}>
+                SIGN UP
+              </Link>
             </Button>
           </div>
         </Form.Item>
@@ -158,13 +196,16 @@ const SignIn = ({setTab, setUser}) => {
         <Form.Item>
           <div className="align-center">
             <Button
-              type="primary"
+              type="text"
               onClick={()=>{setVisible(true)}}
             >
-              Forgot Password?
+              <Title level={4}>
+                Forgot Password?
+              </Title>
             </Button>
           </div>
         </Form.Item>
+
       </Form>
 
       <CollectionCreateForm

@@ -2,23 +2,31 @@ import React, {useEffect, useState} from "react";
 import {Layout, Menu, Button} from "antd";
 import logo from '../Common/Images/logo-full.png'
 import {
+  QuestionCircleOutlined,
   UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined, CloudDownloadOutlined
 } from '@ant-design/icons';
 import HomePage from "./HomePage";
-import Upsell from "./Upsell";
-import Training from "./Training";
 import isMobile from "is-mobile";
 import FAQ from "./FAQ";
 
-const {Header, Sider, Content} = Layout
+const {Header, Sider} = Layout
 
-const Dashboard = (user) => {
+const MenuItems = [
+  {
+    key: 1,
+    icon: <UserOutlined />,
+    title: 'Home'
+  },
+  {
+    key: 2,
+    title: 'FAQ',
+    icon: <QuestionCircleOutlined />
+  }
+]
+
+const Dashboard = ({user}) => {
   const [collapsed, toggleCollapsed] = useState(false)
   const [key, setKey] = useState(1)
-
-  user = user.user;
 
   function toggle() {
     toggleCollapsed(!collapsed);
@@ -30,20 +38,10 @@ const Dashboard = (user) => {
     }
   }
 
-  function IsPremiumTraining() {
-    user.permission.forEach((item)=>{
-      if(item === 'premium_training') {}
-      return true
-    })
-    return false
-  }
-
   function component() {
     switch (key) {
       case 1: return <HomePage user={user} setKey={setKey} />
-      case 3: return <Training />
-      case 5: return <Upsell />
-      case 7: return <FAQ />
+      case 2: return <FAQ />
       default: return <HomePage user={user} setKey={setKey} />
     }
   }
@@ -52,8 +50,6 @@ const Dashboard = (user) => {
     localStorage.removeItem('authToken')
     window.location.reload()
   }
-
-  console.log('child', user)
 
   useEffect(()=>toggleOnMobile(), [])
 
@@ -68,16 +64,6 @@ const Dashboard = (user) => {
         />
 
         <Menu mode="horizontal" style={{float: 'right'}} >
-          <Menu.Item key="1">
-            <Button block>
-              Webinar
-            </Button>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Button block>
-              Support
-            </Button>
-          </Menu.Item>
           <Menu.Item key="3">
             <Button block onClick={()=>logout()} type="primary" className="dark-button">
               Log out
@@ -92,27 +78,11 @@ const Dashboard = (user) => {
         <Sider collapsible collapsed={collapsed} onCollapse={toggle} >
 
           <Menu theme="dark" selectedKeys={String(key)} mode="inline" onClick={(key)=>setKey(parseInt(key.key))} defaultSelectedKeys={['1']}>
-            <Menu.Item key="1" icon={<UserOutlined />}>
-              Home
-            </Menu.Item>
-            <Menu.Item key="2" icon={<CloudDownloadOutlined />}>
-              Download
-            </Menu.Item>
-            <Menu.Item key="3" icon={<UploadOutlined />}>
-              Training
-            </Menu.Item>
-            <Menu.Item key="4" icon={<VideoCameraOutlined />}>
-              Premium Training
-            </Menu.Item>
-            <Menu.Item key="5">
-              Upsell
-            </Menu.Item>
-            <Menu.Item key="6">
-              WhiteLabel
-            </Menu.Item>
-            <Menu.Item key="7">
-              FAQ
-            </Menu.Item>
+            {MenuItems.map((item)=>(
+              <Menu.Item key={item.key} icon={item.icon}>
+                {item.title}
+              </Menu.Item>
+            ))}
           </Menu>
 
         </Sider>

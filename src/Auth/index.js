@@ -1,43 +1,34 @@
-import React, {useState} from "react";
+import React from "react";
 import UserLogWrapper from "../Components/UserLogWrapper";
 import {Row, Col, Typography, Divider} from "antd";
-import PlainContentWrapper from "../Components/PlainContentWrapper";
 import ContentWrapper from "../Components/ContentWrapper";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import SignInImage from '../Common/Images/login.png'
-import Register from '../Common/Images/register.png'
+import {Redirect} from "react-router";
 
 const {Title} = Typography
 
-const Auth = ({setUser}) =>{
-  const [tab,setTab] = useState(1)
+const Auth = ({isAuthed, setUser, signIn}) =>{
 
-  const title = tab ? 'Welcome Back!' : 'Come, Join us!'
-  const formTitle = tab ? 'Sign In' : 'Sign Up'
-  const image = tab ? SignInImage : Register
+  const formTitle = signIn ? 'Sign In' : 'Sign Up'
+
+  if(isAuthed) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    )
+  }
 
   return(
     <UserLogWrapper>
 
       <Row align="center" >
 
-        <Col md={{span: 12}} lg={{span: 16}}>
-          <PlainContentWrapper>
-            <Title>
-              {title}
-            </Title>
-
-            <img
-              width="100%"
-              alt="image"
-              src={image}
-            />
-          </PlainContentWrapper>
-        </Col>
-
-        <Col md={{span: 8}}>
-          <ContentWrapper style={{height: '80%'}} >
+        <Col md={{span: 10}} xs={{span: 20}} >
+          <ContentWrapper>
 
             <Title>
               {formTitle}
@@ -46,14 +37,12 @@ const Auth = ({setUser}) =>{
             <Divider />
 
             {
-              tab ?
+              signIn ?
                 <SignIn
-                  setTab={setTab}
                   setUser={setUser}
                 />
                 :
                 <SignUp
-                  setTab={setTab}
                 />
             }
 
