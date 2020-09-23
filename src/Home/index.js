@@ -38,14 +38,16 @@ const Home = () => {
     }
   }
 
-  useEffect(()=>setUserDetails(), [])
-
   useEffect(()=> {
-    handleAuthed()
+    setUserDetails()
     ReactGA.initialize('UA-178422717-1', {
       debug: true,
       titleCase: false
     });
+  }, [])
+
+  useEffect(()=> {
+    handleAuthed()
   })
 
   return(

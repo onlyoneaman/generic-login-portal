@@ -3,12 +3,14 @@
 </h1>
 
 <h4 align="center">
-  An ReactJS Starter for building User and Admin Portals using Antd Components.
+  A ReactJS Starter for building User and Admin Portals using Antd Components.
 </h4>
 
 ### 
 
 ### Author [Aman Kumar](https://github.com/amank1647)
+
+#### Project Blog: [Medium](https://medium.com/@thehexter/react-login-portal-starter-b8fb59dbeb3f)
 
 #### Motivation
 
@@ -26,10 +28,12 @@ So, I felt a need to create a very generic login portal which can be installed a
 + [License](#license)
 
 ## Features
++ Fully Customizable
 + [Antd](https://ant.design)
 + Mobile Friendly (Portal Best Viewed in Desktop/Tablet)
 + Google Analytics
-+ Login, Register and Forgot Password Pages
++ Brand Logo
++ Register and Forgot Password Pages
 + Integrate with your backend by just changing the API URLs and Requests.
 
 ## Quick Start
@@ -40,7 +44,7 @@ Use the Gatsby CLI to create a new site, specifying the Generic Login Portal
 
 ```sh
 # Create a new portal using generic login portal
-git clone https://github.com/alxshelepenok/gatsby-starter-lumen
+git clone https://github.com/amank1647/generic-login-portal
 ```
 
 #### Start Developing
@@ -58,15 +62,15 @@ You site is now running at `http://localhost:3000`!
 
 #### Access Locally
 ```
-$ git clone https://github.com/[GITHUB_USERNAME]/[REPO_NAME].git
-$ cd [REPO_NAME]
-$ yarn
-$ npm run develop
+$ git clone https://github.com/amank1647/generic-login-portal.git
+$ cd generic-login-portal
+$ npm install
+$ yarn start
 ```
+
 To test the CMS locally, you'll need run a production build of the site:
 ```
-$ npm run build
-$ gatsby serve
+$ yarn build
 ```
 
 ## How to Use
