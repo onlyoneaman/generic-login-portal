@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PlainContentWrapper from "../Components/PlainContentWrapper";
 import {Collapse} from "antd";
 
@@ -27,7 +27,12 @@ const FaqData = [
   }
 ]
 
-const FAQ = () => {
+const FAQ = ({setKey}) => {
+
+  useEffect(()=>{
+    setKey()
+  }, [])
+
   return(
     <PlainContentWrapper>
       <Collapse

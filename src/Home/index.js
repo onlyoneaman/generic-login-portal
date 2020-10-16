@@ -12,10 +12,16 @@ import Auth from "../Auth";
 import ForgotPassword from "./ForgotPassword";
 import NotFound from "./NotFound";
 import ReactGA from 'react-ga'
+import {Spin, Layout, Row, Col} from "antd";
+import ContentWrapper from "../Components/ContentWrapper";
+import Loader from "../Components/Loader";
+
+const {Content} = Layout
 
 const Home = () => {
   const [user, setUser] = useState(null)
   const [isAuthed, setIsAuthed] = useState(false)
+  const [initLoader, setInitLoader] = useState(true)
 
   function handleAuthed() {
     if(user) {
@@ -34,7 +40,10 @@ const Home = () => {
           else {
             SendNotification(NotificationTypeEnum.Success, 'Token Expired. Login Again')
           }
+          setInitLoader(false)
         })
+    } else {
+      setInitLoader(false)
     }
   }
 
@@ -50,16 +59,14 @@ const Home = () => {
     handleAuthed()
   })
 
+  if(initLoader) {
+    return (
+      <Loader />
+    )
+  }
+
   return(
     <Switch>
-
-      <PrivateRoute
-        path="/"
-        exact
-        user={user}
-        isAuthed={isAuthed}
-        Component={Dashboard}
-      />
 
       <AuthRoute
         path='/sign-in'
@@ -88,6 +95,13 @@ const Home = () => {
       <GeneralRoute
         path="/general"
         Component={WelcomePage}
+      />
+
+      <PrivateRoute
+        path="/"
+        user={user}
+        isAuthed={isAuthed}
+        Component={Dashboard}
       />
 
       <GeneralRoute

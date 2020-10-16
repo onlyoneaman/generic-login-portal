@@ -5,9 +5,12 @@ import {
   QuestionCircleOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import {Switch} from "react-router";
 import HomePage from "./HomePage";
 import isMobile from "is-mobile";
 import FAQ from "./FAQ";
+import {Route} from "react-router";
+import {Link} from "react-router-dom";
 
 const {Header, Sider} = Layout
 
@@ -15,12 +18,14 @@ const MenuItems = [
   {
     key: 1,
     icon: <UserOutlined />,
-    title: 'Home'
+    title: 'Home',
+    link: '/'
   },
   {
     key: 2,
     title: 'FAQ',
-    icon: <QuestionCircleOutlined />
+    icon: <QuestionCircleOutlined />,
+    link: '/faq'
   }
 ]
 
@@ -80,14 +85,31 @@ const Dashboard = ({user}) => {
           <Menu theme="dark" selectedKeys={String(key)} mode="inline" onClick={(key)=>setKey(parseInt(key.key))} defaultSelectedKeys={['1']}>
             {MenuItems.map((item)=>(
               <Menu.Item key={item.key} icon={item.icon}>
-                {item.title}
+                <Link to={item.link}>
+                  {item.title}
+                </Link>
               </Menu.Item>
             ))}
           </Menu>
 
         </Sider>
 
-        {component()}
+        <Switch>
+          <Route
+            path="/faq"
+            exact
+            component={() => (
+              <FAQ setKey={()=>setKey(2)} />
+            )}
+          />
+
+          <Route
+            component={() => (
+              <HomePage setKey={()=>setKey(1)} user={user} />
+            )}
+          />
+
+        </Switch>
 
       </Layout>
 
