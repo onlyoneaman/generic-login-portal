@@ -15,6 +15,7 @@ import ReactGA from 'react-ga'
 import {Spin, Layout, Row, Col} from "antd";
 import ContentWrapper from "../Components/ContentWrapper";
 import Loader from "../Components/Loader";
+import { getToken } from "../Common/ApiCall/Logout";
 
 const {Content} = Layout
 
@@ -30,7 +31,7 @@ const Home = () => {
   }
 
   function setUserDetails() {
-    let token = localStorage.getItem('authToken')
+    let token = getToken()
     if(token) {
       GetUserDetails(token)
         .then(r => {

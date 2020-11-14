@@ -5,6 +5,7 @@ import SendNotification from "../Common/Utils/SendNotification";
 import NotificationTypeEnum from "../Common/Models/NotificationTypeEnum";
 import SendForgotToken from "../Common/ApiCall/SendForgotToken";
 import {Link} from "react-router-dom";
+import { setToken } from "../Common/ApiCall/Logout";
 
 const layout = {
   wrapperCol: {
@@ -100,7 +101,7 @@ const SignIn = ({setUser}) => {
       .then(r => {
         //console.log(r)
         if(r.success) {
-          localStorage.setItem('authToken', r.data.token)
+          setToken(r.data.token)
           setUser()
         }
         else {

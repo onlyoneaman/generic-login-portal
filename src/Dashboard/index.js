@@ -11,6 +11,7 @@ import isMobile from "is-mobile";
 import FAQ from "./FAQ";
 import {Route} from "react-router";
 import {Link} from "react-router-dom";
+import {logout} from '../Common/Logout'
 
 const {Header, Sider} = Layout
 
@@ -49,11 +50,6 @@ const Dashboard = ({user}) => {
       case 2: return <FAQ />
       default: return <HomePage user={user} setKey={setKey} />
     }
-  }
-
-  function logout() {
-    localStorage.removeItem('authToken')
-    window.location.reload()
   }
 
   useEffect(()=>toggleOnMobile(), [])

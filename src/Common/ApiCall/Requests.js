@@ -1,6 +1,6 @@
 import axios from 'axios';
 import ApiResponse from "../Models/ApiResponse";
-import logout from "./Logout";
+import {logout} from "./Logout";
 
 export const GetRequest = async (url, params = null, headers = null) => {
   try {
