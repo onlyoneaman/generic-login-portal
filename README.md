@@ -8,9 +8,9 @@
 
 ### 
 
-### Author [Aman Kumar](https://github.com/amank1647)
+### Author [Aman Kumar](https://github.com/onlyoneaman)
 
-#### Project Blog: [Medium](https://medium.com/@thehexter/react-login-portal-starter-b8fb59dbeb3f)
+#### Project Blog: [Medium](https://medium.com/@onlyoneaman/react-login-portal-starter-b8fb59dbeb3f)
 
 #### Motivation
 
