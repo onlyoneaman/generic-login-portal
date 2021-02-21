@@ -1,18 +1,17 @@
-import { Spin } from 'antd'
-import React from 'react'
+import React from "react";
+import ContentWrapper from "./ContentWrapper";
+import {Col, Row, Spin} from "antd";
 
-const Loader = ({fullscreen = false}) => {
-    return(
-        <div className={`hero ${fullscreen ? 'is-fullheight' : ''}`}>
-            <div className="hero-body has-text-centered">
-                <div className="container">
-                    <div className="title">
-                        <Spin size="large" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+const Loader = () => {
+  return(
+    <ContentWrapper>
+      <Row justify="center" >
+        <Col>
+          <Spin />
+        </Col>
+      </Row>
+    </ContentWrapper>
+  )
 }
 
 export default Loader

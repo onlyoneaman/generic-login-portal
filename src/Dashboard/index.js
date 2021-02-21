@@ -11,7 +11,7 @@ import isMobile from "is-mobile";
 import FAQ from "./FAQ";
 import {Route} from "react-router";
 import {Link} from "react-router-dom";
-import {logout} from '../Common/ApiCall/Logout'
+import {logout} from '../Common/Logout'
 
 const {Header, Sider} = Layout
 

@@ -15,7 +15,6 @@ import ReactGA from 'react-ga'
 import {Spin, Layout, Row, Col} from "antd";
 import ContentWrapper from "../Components/ContentWrapper";
 import Loader from "../Components/Loader";
-import Pricing from "../Pricing"
 import { getToken } from "../Common/ApiCall/Logout";
 
 const {Content} = Layout
@@ -93,11 +92,6 @@ const Home = () => {
       >
         <ForgotPassword />
       </AuthRoute>
-
-      <GeneralRoute 
-        path="/prices"
-        Component={Pricing}
-      />
 
       <GeneralRoute
         path="/general"
