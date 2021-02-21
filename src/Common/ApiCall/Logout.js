@@ -1,8 +1,8 @@
 import Cookies from "universal-cookie"
 
 const COOKIE_PATH = "/"
-const COOKIE_DOMAIN = process.env.NODE_ENV === "development" ? "localhost": "growpad.io"
-const COOKIE_NAME = "growpadLoginToken"
+const COOKIE_DOMAIN = process.env.NODE_ENV === "development" ? "localhost": "generic-login-portal.netlify.app"
+const COOKIE_NAME = "myAuthToken"
 
 const cookies = new Cookies()
 

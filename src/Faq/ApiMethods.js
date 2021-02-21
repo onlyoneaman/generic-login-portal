@@ -1,4 +1,4 @@
-export const RunServer = false
+export const RunServer = true
 
 export const ApiUrl = "https://api2.profilebud.com/insta/api/v5"
 
