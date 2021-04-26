@@ -3,7 +3,17 @@ import {Layout} from "antd";
 
 const {Content} = Layout
 
-const ContentWrapper = ({children, marginLess, style}) => {
+interface compProps {
+  children: React.ReactNode,
+  marginLess?: boolean,
+  style?: React.CSSProperties
+}
+
+const ContentWrapper = ({
+  style = {},
+  marginLess = false,
+  children
+}: compProps) => {
   return(
     <Content
       style={style}

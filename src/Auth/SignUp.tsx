@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Form, Input, Typography, Divider} from "antd";
+import {Button, Form, Input, Typography, Divider, message} from "antd";
 import SendNotification from "../Common/Utils/SendNotification";
 import NotificationTypeEnum from "../Common/Models/NotificationTypeEnum";
 import RegisterUser from "../Common/ApiCall/RegisterUser";
@@ -31,16 +31,19 @@ const tailLayout = {
 
 const SignUp = () => {
   const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const onFinish = values => {
     if(values.password !== values.confirm_password) {
       SendNotification(NotificationTypeEnum.Success, 'Passwords doesn\'t match')
       return
     }
+    setLoading(true)
     RegisterUser(values.email, values.password)
       .then(r => {
+        setLoading(false)
         if(r.success) {
-          SendNotification(NotificationTypeEnum.Success ,r.data.message)
+          message.success(r.data.message)
           Sleep(3000)
             .then(()=>{
               setSuccess(true)
@@ -50,7 +53,7 @@ const SignUp = () => {
           if(r.errors[0].message) {
             error = r.errors[0].message
           }
-          SendNotification(NotificationTypeEnum.Failure, error)
+          message.error(error)
         }
       })
     // console.log('Success:', values);
@@ -149,6 +152,8 @@ const SignUp = () => {
             size="large"
             htmlType="submit"
             type="primary"
+            loading={loading}
+            disabled={loading}
           >
             Sign Up
           </Button>

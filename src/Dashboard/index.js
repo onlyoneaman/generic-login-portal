@@ -11,7 +11,7 @@ import isMobile from "is-mobile";
 import FAQ from "./FAQ";
 import {Route} from "react-router";
 import {Link} from "react-router-dom";
-import {logout} from '../Common/Logout'
+import {logout} from '../Common/ApiCall/Logout'
 
 const {Header, Sider} = Layout
 
@@ -44,14 +44,6 @@ const Dashboard = ({user}) => {
     }
   }
 
-  function component() {
-    switch (key) {
-      case 1: return <HomePage user={user} setKey={setKey} />
-      case 2: return <FAQ />
-      default: return <HomePage user={user} setKey={setKey} />
-    }
-  }
-
   useEffect(()=>toggleOnMobile(), [])
 
   return(
@@ -78,7 +70,13 @@ const Dashboard = ({user}) => {
 
         <Sider collapsible collapsed={collapsed} onCollapse={toggle} >
 
-          <Menu theme="dark" selectedKeys={String(key)} mode="inline" onClick={(key)=>setKey(parseInt(key.key))} defaultSelectedKeys={['1']}>
+          <Menu 
+            theme="dark" 
+            selectedKeys={[String(key)]} 
+            mode="inline" 
+            onSelect={ (i) => setKey(i.key)} 
+            defaultSelectedKeys={['1']}
+          >
             {MenuItems.map((item)=>(
               <Menu.Item key={item.key} icon={item.icon}>
                 <Link to={item.link}>

@@ -82,6 +82,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
 
 const SignIn = ({setUser}) => {
   const [visible, setVisible] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const onCreate = values => {
     //console.log('Received values of form: ', values);
@@ -97,8 +98,10 @@ const SignIn = ({setUser}) => {
   };
 
   function onFinish(values) {
+    setLoading(true)
     LoginToken(values.username, values.password)
       .then(r => {
+        setLoading(false)
         //console.log(r)
         if(r.success) {
           setToken(r.data.token)
@@ -167,7 +170,14 @@ const SignIn = ({setUser}) => {
 
         <Form.Item {...tailLayout}>
           <div className="align-center">
-            <Button className="dark-button" size="large" type="primary" htmlType="submit">
+            <Button 
+              className="dark-button" 
+              size="large" 
+              type="primary" 
+              htmlType="submit"
+              loading={loading}
+              disabled={loading}
+            >
               LOGIN
             </Button>
           </div>

@@ -73,21 +73,35 @@ const Home = () => {
         path='/sign-in'
         exact
         isAuthed={isAuthed}
+        user={user}
         setUser={setUserDetails}
       >
-        <Auth setUser={setUserDetails} signIn />
+        <Auth 
+          setUser={setUserDetails} 
+          signIn 
+          isAuthed={isAuthed}
+        />
       </AuthRoute>
 
       <AuthRoute
         path="/sign-up"
         exact
         isAuthed={isAuthed}
+        user={user}
+        setUser={setUserDetails}
       >
-        <Auth signUp />
+        <Auth 
+          signIn={false}
+          isAuthed={isAuthed}
+          setUser={setUserDetails}
+        />
       </AuthRoute>
 
       <AuthRoute
         path="/validate/:id"
+        isAuthed={isAuthed}
+        user={user}
+        setUser={setUserDetails}
         exact
       >
         <ForgotPassword />
@@ -101,6 +115,7 @@ const Home = () => {
       <PrivateRoute
         path="/"
         user={user}
+        setUser={setUserDetails}
         isAuthed={isAuthed}
         Component={Dashboard}
       />

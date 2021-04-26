@@ -8,7 +8,17 @@ import {Redirect} from "react-router";
 
 const {Title} = Typography
 
-const Auth = ({isAuthed, setUser, signIn}) =>{
+interface props {
+  isAuthed: boolean,
+  setUser: Function,
+  signIn: boolean
+}
+
+const Auth = ({
+  signIn,
+  isAuthed,
+  setUser
+}: props) =>{
 
   const formTitle = signIn ? 'Sign In' : 'Sign Up'
 
@@ -25,7 +35,7 @@ const Auth = ({isAuthed, setUser, signIn}) =>{
   return(
     <UserLogWrapper>
 
-      <Row align="center" >
+      <Row align="middle" >
 
         <Col md={{span: 10}} xs={{span: 20}} >
           <ContentWrapper>
