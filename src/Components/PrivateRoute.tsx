@@ -1,7 +1,16 @@
 import React from "react";
 import {Route, Redirect} from "react-router-dom";
 
-export const PrivateRoute = ({Component, isAuthed, user, setUser, ...rest}) => {
+type props = {
+  Component: any,
+  isAuthed?: boolean,
+  user?: any,
+  setUser?: any
+}
+
+export const PrivateRoute = ({
+  Component, isAuthed, user, setUser, ...rest
+}: props) => {
   //console.log(user, rest)
 
   return(
